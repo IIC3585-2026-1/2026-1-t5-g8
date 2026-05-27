@@ -1,0 +1,13 @@
+{
+  "name": "2026-1-t5-g8",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:vue": "npm --workspace my-units-vue run dev",
+    "dev:svelte": "npm --workspace my-units-svelte run dev",
+    "build:vue": "npm --workspace my-units-vue run build",
+    "build:svelte": "npm --workspace my-units-svelte run build"
+  }
+}
