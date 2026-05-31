@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import {
   Ruler,
   Scale,
@@ -11,6 +12,7 @@ import {
 } from 'lucide-vue-next'
 import type { Component } from 'vue'
 import ConversionCard from '@/components/ConversionCard.vue'
+import NaturalInput from '@/components/NaturalInput.vue'
 
 type Conversor = {
   title: string
@@ -78,6 +80,27 @@ const conversores: Conversor[] = [
     defaults: ['MB', 'GB'],
   },
 ]
+
+const cardRefs = ref<InstanceType<typeof ConversionCard>[]>([])
+
+function onMatch({
+  category,
+  value,
+  fromUnit,
+  toUnit,
+}: {
+  category: string
+  value: number
+  fromUnit: string
+  toUnit: string
+}) {
+  const idx = conversores.findIndex((c) => c.title === category)
+  if (idx === -1) return
+  const card = cardRefs.value[idx]
+  if (!card) return
+  card.applyValues(value, fromUnit, toUnit)
+  card.scrollIntoView()
+}
 </script>
 
 <template>
@@ -87,10 +110,13 @@ const conversores: Conversor[] = [
       <p>Conversor de unidades</p>
     </header>
 
+    <NaturalInput @match="onMatch" />
+
     <div class="grid">
       <ConversionCard
         v-for="c in conversores"
         :key="c.title"
+        ref="cardRefs"
         :title="c.title"
         :icon="c.icon"
         :units="c.units"

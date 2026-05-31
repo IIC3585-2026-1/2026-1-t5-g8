@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import type { Ref } from 'vue'
 import type { Component } from 'vue'
 import { ArrowUpDown } from 'lucide-vue-next'
 
@@ -49,10 +50,29 @@ const formattedResult = computed(() => (result.value !== null ? format(result.va
 function swapUnits() {
   ;[fromUnit.value, toUnit.value] = [toUnit.value, fromUnit.value]
 }
+
+const el = ref<HTMLElement | null>(null)
+const highlighted = ref(false)
+
+function applyValues(v: number, from: string, to: string) {
+  value.value = v
+  fromUnit.value = from
+  toUnit.value = to
+  highlighted.value = true
+  setTimeout(() => {
+    highlighted.value = false
+  }, 900)
+}
+
+defineExpose({
+  applyValues,
+  scrollIntoView: () => el.value?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+  el: el as Ref<HTMLElement | null>,
+})
 </script>
 
 <template>
-  <article class="card">
+  <article ref="el" :class="['card', { highlighted }]">
     <header>
       <component :is="icon" :size="18" color="green" />
       <h2>{{ title }}</h2>
@@ -94,6 +114,14 @@ function swapUnits() {
 .card:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
   border-color: var(--border-color-hover);
+}
+
+.card.highlighted {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+  transition:
+    box-shadow 0.1s,
+    border-color 0.1s;
 }
 
 header {
