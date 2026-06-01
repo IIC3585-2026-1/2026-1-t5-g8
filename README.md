@@ -66,7 +66,7 @@ Svelte 5 hace que una variable normal sea reactiva con runes, lo que se siente m
 - Estructura inicial de componentes, tipos de TypeScript y estilos repetitivos generados con ayuda de IA, lo que nos dejó tiempo para enfocarnos en  
 entender los frameworks.
 - La IA ayudó a juntar las tablas de las 8 categorías, que después verificamos a mano contra fuentes.
-- **E**l parser de lenguaje natural lo propuso la IA con una librería externa que daba problemas en el bundle, así que la descartamos y reescribimos el conversor de palabras a números a mano. Las decisiones de arquitectura (diseño data-driven, no usar store global) fueron del equipo.
+- El parser de lenguaje natural lo propuso la IA con una librería externa que daba problemas en el bundle, así que la descartamos y reescribimos el conversor de palabras a números a mano. Las decisiones de arquitectura (diseño data-driven, no usar store global) fueron del equipo.
 - Este README fue generado con apoyo de IA.
 
 ## Autoevaluación
